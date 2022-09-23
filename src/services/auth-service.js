@@ -4,7 +4,7 @@
 
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/auth/';
+const API_URL = process.env.VUE_APP_BACKEND_URL + "/" + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/";
 
 class AuthService {
   login(user) {
@@ -15,7 +15,7 @@ class AuthService {
         formData
     })
     return axios
-      .post(API_URL + 'jwt/login', formData)
+      .post(API_URL + process.env.VUE_APP_AUTH_LOGIN_ENDPOINT, formData)
       .then(response => {
         if (response.data.access_token) {
           localStorage.setItem('user', JSON.stringify(response.data));
@@ -27,10 +27,6 @@ class AuthService {
         console.log(e);
       });
   }
-
-  //profile(user) {
-
-  //}
 
   logout() {
     localStorage.removeItem('user');

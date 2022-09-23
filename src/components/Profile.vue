@@ -14,7 +14,7 @@
         {{content.id}}
         </p> -->
         <h4><strong>Full Name:</strong> {{content.full_name}}</h4>
-        <h4><strong>Email:</strong> {{content.email}}</h4>
+        <h4><strong>Email:</strong> {{content.email}}</h4>  
         <h4><strong>Authority:</strong> {{role}}</h4>
     </div>
 </template>
