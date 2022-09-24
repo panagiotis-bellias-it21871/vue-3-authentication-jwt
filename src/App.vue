@@ -110,6 +110,7 @@ export default {
         console.log(this.username);
     },
     (error) => {
+      console.log(error);
         this.username =
         (error.response &&
             error.response.data &&

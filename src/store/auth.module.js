@@ -1,3 +1,4 @@
+import UserService from '@/services/user-service';
 import AuthService from '../services/auth-service';
 
 const user = JSON.parse(localStorage.getItem('user'));
@@ -42,6 +43,21 @@ export const auth = {
     loginSuccess(state, user) {
       state.status.loggedIn = true;
       state.user = user;
+      state.username = UserService.getUserBoard().then(
+        (response) => {
+            let username = response.data.username;
+            console.log(username);
+            return username;
+        },
+        (error) => {
+          console.log(error);
+            return (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+        }
+        );
     },
     loginFailure(state) {
       state.status.loggedIn = false;

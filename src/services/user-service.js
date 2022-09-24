@@ -5,7 +5,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = process.env.VUE_APP_BACKEND_URL + "/" + process.env.VUE_APP_USERS_ENDPOINT_PREFIX + "/";
+const API_URL = process.env.VUE_APP_BACKEND_URL + "/";
 
 class UserService {
   getPublicContent() {
@@ -13,7 +13,11 @@ class UserService {
   }
 
   getUserBoard() {
-    return axios.get(API_URL + 'me', { headers: authHeader() });
+    return axios.get(API_URL + process.env.VUE_APP_USERS_ENDPOINT_PREFIX + "/me", { headers: authHeader() });
+  }
+
+  getStudentInfo(user_username) {
+    return axios.get(API_URL + process.env.VUE_APP_BASE_ENDPOINT_PREFIX + "/students/u/" + user_username, { headers: authHeader() });
   }
 
   getModeratorBoard() {
