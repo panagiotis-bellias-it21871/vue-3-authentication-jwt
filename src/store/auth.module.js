@@ -42,7 +42,7 @@ export const auth = {
       return AuthService.registerStudent(student).then(
         response => {
           commit('registerSuccess');
-          return Promise.resolve(response.data);
+          return Promise.resolve(response);
         },
         error => {
           commit('registerFailure');
@@ -54,7 +54,7 @@ export const auth = {
       return AuthService.registerTeacher(teacher).then(
         response => {
           commit('registerSuccess');
-          return Promise.resolve(response.data);
+          return Promise.resolve(response);
         },
         error => {
           commit('registerFailure');

@@ -53,7 +53,7 @@
 </template>
   
   <script>
-  
+  import AuthService from "../services/auth-service.js";
   export default {
     name: "RegisterStudent",
     components: {
@@ -62,7 +62,7 @@
         return {
           username: "",
           email: "",
-          fullName: "",
+          fullname: "",
           school: "",
           schid: "",
           grades: "",
@@ -97,14 +97,18 @@
           gradesurl: this.grades,
           password: this.password
         }
-  
-        this.$store.dispatch("auth/registerStudent", student).then(
-          () => {
-            alert("Check your email account to follow the account verification link.")
-            this.$router.push("/")
+
+        AuthService.registerStudent(student).then(
+          (res) => {
+            if(res.status == 202){
+              alert("Check your email account to follow the account verification link.")
+              this.$router.push("/")
+            }
           },
-          (error) => {
-            console.log(error);
+          (err) => {
+            console.log(err);
+            alert("Something went wrong! Try again...")
+            this.$router.push("/register/student");
           }
         );
       },

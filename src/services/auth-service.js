@@ -56,9 +56,6 @@ class AuthService {
         }).then(
           (res) => {
             console.log(res);
-            return axios.post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/request-verify-token", {
-              email: student.email
-            })
           }
         );
       }
@@ -66,6 +63,9 @@ class AuthService {
       console.log(err);
       return err;
     });
+    return axios.post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/request-verify-token", {
+      email: student.email
+    })
   }
 
   registerTeacher(teacher) {
@@ -78,9 +78,6 @@ class AuthService {
         }).then(
           (res) => {
             console.log(res);
-            return axios.post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/request-verify-token", {
-              email: teacher.email
-            })
           }
         );
       }
@@ -88,6 +85,9 @@ class AuthService {
       console.log(err);
       return err;
     });
+    return axios.post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/request-verify-token", {
+      email: teacher.email
+    })
   }
 
   verifyToken(token) {

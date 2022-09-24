@@ -1,11 +1,6 @@
 <template>
     <div class="verify-token">
-      <div v-if=ok>
-        <h2>Verified!</h2>
-      </div>
-      <div v-else><br/>
-        <h3>Something went wrong! Please try again!</h3>
-      </div>
+      <h2>{{ message }}</h2>
     </div>
   </template>
   
@@ -17,17 +12,18 @@
       return {
         token: this.$route.params.token,
         errors: [],
-        ok: false,
+        message: "",
       }
     },
     mounted(){
         var token = this.token;
         AuthService.verifyToken(token).then(
             (response) => {
-                this.ok = true;
+                this.message = "Verified!";
                 console.log(response.data);
             },
             (error) => {
+                this.message = "Something went wrong! Please try again!"
                 console.log(error);
             }
         )

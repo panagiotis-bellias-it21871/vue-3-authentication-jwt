@@ -1,46 +1,61 @@
 <template>
-    <div class="register">
-      <p class="lead">Select below the type of account you want to create</p>
-      <button class="btn btn-block btn-stud" @click="$router.push('register/student')">I am a student</button>
-      <button class="btn btn-block btn-teac" @click="$router.push('register/teacher')">I am a teacher</button><br/>
-      <h5>If you have already an account click button below to login</h5>
-      <button class="btn btn-block btn-login" @click="$router.push('login')">Login</button>
-    </div>
-  </template>
-  
-  <script>
-  
-  export default {
-    name: "RegisterPage",
-    components: {
+  <div class="register">
+    <p class="lead">Select below the type of account you want to create</p>
+    <button class="btn btn-block btn-stud" @click="$router.push('register/student')">I am a student</button>
+    <button class="btn btn-block btn-teac" @click="$router.push('register/teacher')">I am a teacher</button><br/>
+    <h5>If you have already an account click button below to login</h5>
+    <button class="btn btn-block btn-login" @click="$router.push('login')">Login</button>
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: "RegisterPage",
+  components: {
+  },
+  data() {
+    return {
+    };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
     },
-    data() {
-      return {
-      };
-    },
-    computed: {
-      loggedIn() {
-        return this.$store.state.auth.status.loggedIn;
-      },
-    },
-    mounted() {
-      if (this.loggedIn) {
-        this.$router.push("/");
-      }
-    },
-  };
-  </script>
-  
-  <style scoped>
-.lead {
+  },
+  mounted() {
+    if (this.loggedIn) {
+      this.$router.push("/");
+    }
+  },
+};
+</script>
+
+<style scoped>
+  .btn-stud {
+    color: #fff;
+    background-color: blue;
+    width: 220px;
+  }
+  .btn-teac {
   color: #fff;
-}
-h1 {
+  background-color: rgb(148, 7, 61);
+  width: 220px;
+  }
+  .btn-login {
+  color: #fff;
+  background-color: rgb(128, 113, 119);
+  width: 220px;
+  }
+  .lead {
+  color: #fff;
+  }
+  h1 {
   color: #fff;
   padding: 0 15px;
   display: block;
-}
-h5 {
+  }
+  h5 {
   color: #fff;
-}  </style>
-  
+  }  
+</style>

@@ -42,8 +42,9 @@
 </template>
 
 <script>
+import AuthService from '../services/auth-service.js';
 export default {
-  name: "SignupTeacherView",
+  name: "RegisterTeacher",
   data(){
     return {
       username: "",
@@ -69,16 +70,19 @@ export default {
         password: this.password
       }
 
-      this.$store.dispatch("auth/registerTeacher", teacher).then(
-        (res) => {
-          console.log(res);
-          alert("Check your email account to follow the account verification link.")
-          this.$router.push("/")
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      AuthService.registerTeacher(teacher).then(
+          (res) => {
+            if(res.status == 202){
+              alert("Check your email account to follow the account verification link.")
+              this.$router.push("/")
+            }
+          },
+          (err) => {
+            console.log(err);
+            alert("Something went wrong! Try again...")
+            this.$router.push("/register/teacher");
+          }
+        );
     }
   }
 }
