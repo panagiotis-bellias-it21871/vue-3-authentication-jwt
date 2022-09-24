@@ -68,7 +68,7 @@
     },
     created() {
       if (this.loggedIn) {
-        this.$router.push("/profile");
+        this.$router.push("/");
       }
     },
     methods: {
@@ -81,7 +81,7 @@
             this.$store.dispatch("auth/username", user).then(
           (response) => {
             console.log(response)
-            this.$router.push("/profile");
+            this.$router.push("/");
           },
           (error) => {
             this.loading = false;
@@ -93,7 +93,6 @@
               error.toString();
           }
         );
-            //this.$router.push("/profile");
           },
           (error) => {
             this.loading = false;

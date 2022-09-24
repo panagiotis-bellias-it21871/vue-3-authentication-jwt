@@ -5,7 +5,7 @@
 import axios from 'axios';
 import UserService from './user-service';
 
-const API_URL = process.env.VUE_APP_BACKEND_URL + "/" + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/";
+const API_URL = process.env.VUE_APP_BACKEND_URL + "/";
 
 class AuthService {
   login(user) {
@@ -16,7 +16,7 @@ class AuthService {
         formData
     })
     return axios
-      .post(API_URL + process.env.VUE_APP_AUTH_LOGIN_ENDPOINT, formData)
+      .post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/" + process.env.VUE_APP_AUTH_LOGIN_ENDPOINT, formData)
       .then(response => {
         if (response.data.access_token) {
           localStorage.setItem('user', JSON.stringify(response.data));
@@ -33,11 +33,46 @@ class AuthService {
     localStorage.removeItem('user');
   }
 
-  register(user) {
-    return axios.post(API_URL + 'signup', {
-      username: user.username,
-      email: user.email,
-      password: user.password
+  register(email, password, username, full_name, student, teacher) {
+    return axios.post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/" + 'register', {
+      email: email,
+      password: password,
+      username: username,
+      full_name: full_name,
+      student: student,
+      teacher: teacher
+    });
+  }
+
+  registerStudent(student) {
+    this.register(student.email, student.password, student.username, student.fullname, true, false).then(
+      res => {
+        console.log(res);
+      }
+    ).catch(err => {
+      console.log(err);
+      return err;
+    });
+    return axios.post(API_URL + process.env.VUE_APP_BASE_ENDPOINT_PREFIX + "/students", {
+      school: student.school,
+      school_id: student.schid,
+      grades_url: student.gradesurl,
+      user_username: student.username
+    });
+  }
+
+  registerTeacher(teacher) {
+    this.register(teacher.email, teacher.password, teacher.username, teacher.fullname, false, true).then(
+      res => {
+        console.log(res);
+      }
+    ).catch(err => {
+      console.log(err);
+      return err;
+    });
+    return axios.post(API_URL + process.env.VUE_APP_BASE_ENDPOINT_PREFIX + "/teachers", {
+      description: teacher.description,
+      user_username: teacher.username
     });
   }
 

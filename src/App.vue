@@ -67,7 +67,6 @@
 </template>
 
 <script>
-//import UserService from './services/user-service';
 export default {
   data() {
     return {
@@ -103,25 +102,6 @@ export default {
     }
   },
   mounted() {
-    //if (!this.currentUser) {
-    //this.$router.push('/login');
-    //} 
-    /*
-    UserService.getUserBoard().then(
-    (response) => {
-        this.username = response.data.username;
-        console.log(this.username);
-    },
-    (error) => {
-      console.log(error);
-        this.username =
-        (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-        error.message ||
-        error.toString();
-    }
-    );*/
   },
 };
 
