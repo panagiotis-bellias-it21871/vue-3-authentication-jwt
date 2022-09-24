@@ -3,6 +3,7 @@
 */
 
 import axios from 'axios';
+import UserService from './user-service';
 
 const API_URL = process.env.VUE_APP_BACKEND_URL + "/" + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/";
 
@@ -38,6 +39,19 @@ class AuthService {
       email: user.email,
       password: user.password
     });
+  }
+
+  username() {
+    return UserService.getUserBoard()
+      .then(response => {
+        console.log("HERE: " + JSON.stringify(response.data.username));
+        localStorage.setItem('username', JSON.stringify(response.data.username));
+
+        return response.data.username;
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 }
 

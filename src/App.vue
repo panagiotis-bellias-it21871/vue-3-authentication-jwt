@@ -67,17 +67,19 @@
 </template>
 
 <script>
-import UserService from './services/user-service';
+//import UserService from './services/user-service';
 export default {
   data() {
     return {
-      username: "",
       siteTitle: "Reference Letters App",
     }
   },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
+    },
+    username() {
+      return this.$store.state.auth.username;
     },
     showAdminBoard() {
       if (this.currentUser) {
@@ -101,9 +103,10 @@ export default {
     }
   },
   mounted() {
-    if (!this.currentUser) {
-    this.$router.push('/login');
-    }
+    //if (!this.currentUser) {
+    //this.$router.push('/login');
+    //} 
+    /*
     UserService.getUserBoard().then(
     (response) => {
         this.username = response.data.username;
@@ -118,7 +121,7 @@ export default {
         error.message ||
         error.toString();
     }
-    );
+    );*/
   },
 };
 

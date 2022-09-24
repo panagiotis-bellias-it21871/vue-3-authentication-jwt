@@ -78,6 +78,9 @@
         this.$store.dispatch("auth/login", user).then(
           (response) => {
             console.log(response)
+            this.$store.dispatch("auth/username", user).then(
+          (response) => {
+            console.log(response)
             this.$router.push("/profile");
           },
           (error) => {
@@ -90,6 +93,34 @@
               error.toString();
           }
         );
+            //this.$router.push("/profile");
+          },
+          (error) => {
+            this.loading = false;
+            this.message =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+          }
+        );
+          /*
+        this.$store.dispatch("auth/username", user).then(
+          (response) => {
+            console.log(response)
+            this.$router.push("/profile");
+          },
+          (error) => {
+            this.loading = false;
+            this.message =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+          }
+        );*/
       },
     },
   };
