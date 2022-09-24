@@ -16,8 +16,10 @@ class UserService {
     return axios.get(API_URL + process.env.VUE_APP_USERS_ENDPOINT_PREFIX + "/me", { headers: authHeader() });
   }
 
-  getStudentInfo(user_username) {
-    return axios.get(API_URL + process.env.VUE_APP_BASE_ENDPOINT_PREFIX + "/students/u/" + user_username, { headers: authHeader() });
+  getStudentInfo(username) {
+    console.log(username);
+    let user_username = username;
+    return axios.get(API_URL + process.env.VUE_APP_BASE_ENDPOINT_PREFIX + "/students/u/" + `${user_username}`, { headers: authHeader() });
   }
 
   getModeratorBoard() {

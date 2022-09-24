@@ -109,8 +109,9 @@ const router = createRouter({
   routes,
 });
 
+/*
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/home', '/', '/register', '/login', '/register/student', '/register/teacher', '/about'];
+    const publicPages = ['/verify_token', '/home', '/', '/register', '/login', '/register/student', '/register/teacher', '/about'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
   
@@ -122,5 +123,5 @@ router.beforeEach((to, from, next) => {
       next();
     }
   });
-
+*/
 export default router;

@@ -3,143 +3,72 @@
     <div class="row">
       <div class="col-md-8 col-sm-10 col-12">
         <h2>Sign up as a student</h2>
-        <div class="card card-container"><!--
-          <img
-            id="profile-img"
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            class="profile-img-card"
-          />-->
-          <Form @submit="handleRegister" :validation-schema="schema">
-            <div v-if="!successful">
-              <div class="form-group">
-                <label for="username">Username</label>
-                <Field name="username" type="text" class="form-control"  placeholder="Enter your username" />
-                <ErrorMessage name="username" class="error-feedback"/>
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <Field name="email" type="email" class="form-control"  placeholder="Enter your email address" />
-                <ErrorMessage name="email" class="error-feedback"/>
-              </div>
-              <div class="form-group">
-                <label for="fullname">Full Name</label>
-                <Field name="fullname" type="text" class="form-control"  placeholder="Enter your full name" />
-                <ErrorMessage name="fullname" class="error-feedback"/>
-              </div>
-              
-              <div class="form-group">
-                <label for="school">School / Department (Select from the list)</label>
-                <select name="school" class="form-control">
-                  <option value="dit">Informatics and Telematics</option>
-                  <option value="geo">Geography</option>
-                  <option value="ddns">Nutrition and Dietetics</option>
-                  <option value="dhee">Economics & Sustainable Development</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="schid">School ID</label>
-                <Field name="schid" type="text" class="form-control"  placeholder="Enter your school ID number" />
-                <ErrorMessage name="schid" class="error-feedback"/>
-              </div>
-              <div class="form-group">
-                <label for="gradesurl">Grading File (Give public URL)</label>
-                <Field name="gradesurl" type="text" class="form-control"  placeholder="Enter URL for your grading" />
-                <ErrorMessage name="gradesurl" class="error-feedback"/>
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <Field name="password" type="password" class="form-control"   placeholder="Enter your password"/>
-                <ErrorMessage name="password" class="error-feedback"/>
-              </div>
-              <div class="form-group">
-                <label for="password2">Password Confirmation</label>
-                <Field name="password2" type="password" class="form-control"   placeholder="Confirm your password"/>
-                <ErrorMessage name="password2" class="error-feedback"/>
-              </div>
-    
-              <div class="row">
-                <button class="btn btn-primary btn-block col-6 mx-auto" :disabled="loading">
-                  <span
-                    v-show="loading"
-                    class="spinner-border spinner-border-sm"
-                  ></span>
-                  Sign Up
-                </button>
-              </div>
+        <form @submit.prevent="handleRegister">
+            <div class="form-group">
+              <label>Username</label>
+              <input v-model="username" type="text" name="username" id="username" class="form-control" placeholder="Enter your username">
             </div>
-          </Form>
-    
-          <div
-            v-if="message"
-            class="alert"
-            :class="successful ? 'alert-success' : 'alert-danger'"
-          >
-            {{ message }}
-          </div>
-        </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input v-model="email" type="text" name="email" id="email" class="form-control" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+              <label>Full Name</label>
+              <input v-model="fullName" type="text" name="fullName" id="fullName" class="form-control" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+              <label>School / Department (Select from the list)</label>
+              <select v-model="school" name="school" id="school" class="form-control">
+                <option value="dit">Informatics and Telematics</option>
+                <option value="geo">Geography</option>
+                <option value="ddns">Nutrition and Dietetics</option>
+                <option value="dhee">Economics & Sustainable Development</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>School ID</label>
+              <input v-model="schid" type="text" name="schid" id="schid" class="form-control" placeholder="Enter your school id number">
+            </div>
+            <div class="form-group">
+              <label>Grading File (Give public URL)</label>
+              <input v-model="grades" type="text" name="grades" id="grades" class="form-control" placeholder="Enter URL for your grading">              
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input v-model="password" type="password" name="password" class="form-control" placeholder="Enter your password" size="1">
+            </div>
+            <div class="form-group">
+              <label>Password Confirmation</label>
+              <input v-model="password2" type="password" name="password2" class="form-control" placeholder="Confirm your password" size="1">
+            </div>
+            <div class="row">
+                <div class="col-6 mx-auto">
+                    <button class="btn btn-block btn-success">Sign Up</button>
+                </div>
+            </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
   
   <script>
-  import { Form, Field, ErrorMessage } from "vee-validate";
-  import * as yup from "yup";
   
   export default {
     name: "RegisterStudent",
     components: {
-      Form,
-      Field,
-      ErrorMessage,
     },
-    data() {
-      const schema = yup.object().shape({
-        username: yup
-          .string()
-          .required("Username is required!")
-          .min(3, "Must be at least 3 characters!")
-          .max(20, "Must be maximum 20 characters!"),
-        email: yup
-          .string()
-          .required("Email is required!")
-          .email("Email is invalid!")
-          .max(50, "Must be maximum 50 characters!"),
-        fullname: yup
-          .string()
-          .required("Full name is required!")
-          .max(50, "Must be maximum 50 characters!"),
-        school: yup
-          .string()
-          .required("School selection is required!"),        
-        schid: yup
-          .string()
-          .required("School ID number is required!")
-          .min(7, "Must be at least 7 characters!")
-          .max(9, "Must be maximum 9 characters!"),
-        gradesurl: yup
-          .string()
-          .url("URL is invalid!")
-          .required("URL for grading file is required!")
-          .min(10, "Must be at least 10 characters!"),        
-        password: yup
-          .string()
-          .required("Password is required!")
-          .min(6, "Must be at least 6 characters!")
-          .max(40, "Must be maximum 40 characters!"),
-        password2: yup
-          .string()
-          .required("Password confirmation is required!")
-          .min(6, "Must be at least 6 characters!")
-          .max(40, "Must be maximum 40 characters!"),
-      });
-  
-      return {
-        successful: false,
-        loading: false,
-        message: "",
-        schema,
-      };
+    data() { 
+        return {
+          username: "",
+          email: "",
+          fullName: "",
+          school: "",
+          schid: "",
+          grades: "",
+          password: "",
+          password2: "",
+        }
     },
     computed: {
       loggedIn() {
@@ -152,33 +81,30 @@
       }
     },
     methods: {
-      handleRegister(student) {
-        
-        this.message = "";
-        this.successful = false;
-        if(student.password != student.password2) {
-          this.message = "Passwords don't match"
+      handleRegister() {
+        console.log("DEBUG")
+        if(this.password != this.password2) {
+          alert("Passwords don't match");
           return;
         }
-        this.loading = true;
+
+        const student = {
+          username: this.username,
+          email: this.email,
+          fullname: this.fullname,
+          school: this.school,
+          schid: this.schid,
+          gradesurl: this.grades,
+          password: this.password
+        }
   
         this.$store.dispatch("auth/registerStudent", student).then(
-          (data) => {
-            this.message = data.message;
-            this.successful = true;
-            this.loading = false;
+          () => {
             alert("Check your email account to follow the account verification link.")
             this.$router.push("/")
           },
           (error) => {
-            this.message =
-              (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-            this.successful = false;
-            this.loading = false;
+            console.log(error);
           }
         );
       },

@@ -35,6 +35,8 @@ import ReferenceLetterRequestList from "./ReferenceLetterRequestList.vue";
     },
     data() {
         return {
+            username: "",
+            student_id: 0,
             rl_requests: [],
             errors: [],
         };
@@ -50,35 +52,8 @@ import ReferenceLetterRequestList from "./ReferenceLetterRequestList.vue";
         console.log(teacher_id, carrier_name, carrier_email)
         const status = "pending"
         const text = ""
-        let username = ""
-        UserService.getUserBoard().then(
-        (response) => {
-            username = response.data.username;
-            console.log(username);
-        },
-        (error) => {
-            username =
-            (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-            error.message ||
-            error.toString();
-        });
-        let student_id;
-        UserService.getStudentInfo(username).then(
-          (response) => {
-            student_id = response.data.id;
-            console.log(student_id);
-        },
-        (error) => {
-          student_id =
-            (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-            error.message ||
-            error.toString();
-        });
-        DataService.createRlRequest(carrier_name, carrier_email, status, text, teacher_id, student_id).then((response) => 
+        
+        DataService.createRlRequest(carrier_name, carrier_email, status, text, teacher_id, this.student_id).then((response) => 
         (this.rl_requests = [...this.rl_requests, response.data]),
         (error) => {
             this.rl_requests =
@@ -94,19 +69,30 @@ import ReferenceLetterRequestList from "./ReferenceLetterRequestList.vue";
       }*/
     },
     mounted() { 
-      
-      /*
-      if(this.loggedIn)
-        UserService.getPublicContent().then((response) => {
-            this.rl_requests = response.data;
-        }, (error) => {
-            this.rl_requests =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-        });*/
+      if(this.loggedIn) {
+        UserService.getUserBoard().then(
+        (response) => {
+            this.username = response.data.username;
+            console.log(this.username);
+        },
+        (error) => {
+          this.username =
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+        });
+        UserService.getStudentInfo(this.username).then(
+          (response) => {
+            this.student_id = response.data.id;
+            console.log(this.student_id);
+       },
+        (error) => {
+          this.student_id = -1;
+          console.log(error);
+       });
+      }
     }    
 };
   </script>

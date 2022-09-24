@@ -34,7 +34,7 @@ class AuthService {
   }
 
   register(email, password, username, full_name, student, teacher) {
-    return axios.post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/" + 'register', {
+    return axios.post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/register", {
       email: email,
       password: password,
       username: username,
@@ -48,16 +48,23 @@ class AuthService {
     this.register(student.email, student.password, student.username, student.fullname, true, false).then(
       res => {
         console.log(res);
+        axios.post(API_URL + process.env.VUE_APP_BASE_ENDPOINT_PREFIX + "/students", {
+          school: student.school,
+          school_id: student.schid,
+          grades_url: student.gradesurl,
+          user_username: student.username
+        }).then(
+          (res) => {
+            console.log(res);
+            return axios.post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/request-verify-token", {
+              email: student.email
+            })
+          }
+        );
       }
     ).catch(err => {
       console.log(err);
       return err;
-    });
-    return axios.post(API_URL + process.env.VUE_APP_BASE_ENDPOINT_PREFIX + "/students", {
-      school: student.school,
-      school_id: student.schid,
-      grades_url: student.gradesurl,
-      user_username: student.username
     });
   }
 
@@ -65,14 +72,28 @@ class AuthService {
     this.register(teacher.email, teacher.password, teacher.username, teacher.fullname, false, true).then(
       res => {
         console.log(res);
+        axios.post(API_URL + process.env.VUE_APP_BASE_ENDPOINT_PREFIX + "/teachers", {
+          description: teacher.description,
+          user_username: teacher.username
+        }).then(
+          (res) => {
+            console.log(res);
+            return axios.post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/request-verify-token", {
+              email: teacher.email
+            })
+          }
+        );
       }
     ).catch(err => {
       console.log(err);
       return err;
     });
-    return axios.post(API_URL + process.env.VUE_APP_BASE_ENDPOINT_PREFIX + "/teachers", {
-      description: teacher.description,
-      user_username: teacher.username
+  }
+
+  verifyToken(token) {
+    console.log(token);
+    return axios.post(API_URL + process.env.VUE_APP_AUTH_ENDPOINT_PREFIX + "/verify", {
+      token: token
     });
   }
 
